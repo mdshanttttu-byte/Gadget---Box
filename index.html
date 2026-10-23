@@ -9,141 +9,184 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
-            background-color: #0b0f17;
-            color: #e6edf3;
-            padding: 20px 10px;
-        }
-        .header {
-            text-align: center;
-            padding: 35px 15px;
-            background: linear-gradient(135deg, #161e2e, #0b0f17);
-            border-radius: 16px;
-            margin-bottom: 30px;
-            border: 1px solid #1f293d;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-        }
-        .header h1 {
-            color: #f59e0b;
-            font-size: 2.2rem;
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-        .header p {
-            color: #9ca3af;
-            font-size: 1rem;
-        }
-        .container {
+            background-color: #05050a;
+            color: #f8fafc;
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
             justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
         }
-        .card {
-            background: #111827;
-            border: 1px solid #1f293d;
-            border-radius: 14px;
+
+        /* Virus Box Container */
+        .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 320px;
-            padding: 18px;
+            background: #0d1117;
+            padding: 30px 20px;
+            border-radius: 20px;
             text-align: center;
-            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid #ff0055;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.4), inset 0 0 15px rgba(255, 0, 85, 0.2);
+            animation: virusPulse 4s infinite alternate;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #f59e0b;
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15);
+
+        /* Container Virus Breathing Glow */
+        @keyframes virusPulse {
+            0% {
+                border-color: #ff0055;
+                box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+            }
+            50% {
+                border-color: #00ff88;
+                box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+            }
+            100% {
+                border-color: #f59e0b;
+                box-shadow: 0 0 25px rgba(245, 158, 11, 0.5);
+            }
         }
-        .card img {
-            width: 100%;
-            height: 200px;
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        /* Virus Spinning Logo */
+        .logo-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             object-fit: cover;
-            border-radius: 10px;
             margin-bottom: 15px;
+            border: 3px solid #ff0055;
+            animation: virusSpin 8s linear infinite, glitchJitter 2s infinite;
         }
-        .card h3 {
-            margin-bottom: 8px;
-            color: #ffffff;
-            font-size: 1.2rem;
+
+        /* Fast Spin Animation */
+        @keyframes virusSpin {
+            0% {
+                transform: rotate(0deg);
+                box-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055;
+            }
+            50% {
+                box-shadow: 0 0 25px #00ff88, 0 0 50px #00ff88;
+            }
+            100% {
+                transform: rotate(360deg);
+                box-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055;
+            }
         }
-        .card p {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            line-height: 1.4;
+
+        /* Glitch Jitter/Shaking Effect */
+        @keyframes glitchJitter {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, 2px) rotate(-3deg); }
+            20% { transform: translate(2px, -2px) rotate(3deg); }
+            30% { transform: translate(-1px, -1px) rotate(0deg); }
+            40% { transform: translate(1px, 2px) rotate(1deg); }
+            50% { transform: translate(-2px, 0) rotate(-1deg); }
         }
-        .price {
-            color: #10b981;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin: 10px 0 15px 0;
+
+        /* Glitch Text Animation */
+        .header h1 {
+            font-size: 30px;
+            color: #00ff88;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px #00ff88, 2px 2px #ff0055;
+            animation: textGlitch 1.5s infinite;
         }
+
+        @keyframes textGlitch {
+            0%, 100% { text-shadow: 0 0 10px #00ff88, 2px 2px #ff0055; }
+            50% { text-shadow: -2px -2px #ff0055, 2px 2px #00ff88; }
+        }
+
+        .header p {
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
         .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 12px;
-            background-color: #25d366;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: 12px;
             text-decoration: none;
-            border-radius: 8px;
             font-weight: bold;
-            font-size: 0.95rem;
-            transition: background 0.2s;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+
+        .btn-facebook {
+            background-color: #1877f2;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(24, 119, 242, 0.4);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(37, 211, 102, 0.4);
+        }
+
         .btn:hover {
-            background-color: #1eb857;
+            transform: scale(1.03);
+            box-shadow: 0 0 20px #00ff88;
         }
+
         .footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #6b7280;
-            font-size: 0.85rem;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Gadget Box</h1>
-        <p>Your Premium Gadget Partner</p>
-    </div>
-
     <div class="container">
-        <!-- Product 1 -->
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df" alt="TWS Earbuds">
-            <h3>Hoco TWS Earbuds</h3>
-            <p>ANC + ENC নয়েজ ক্যানসেলেশন ও ক্রিস্টাল ক্লিয়ার সাউন্ড।</p>
-            <div class="price">৳ ১,৪৫০</div>
-            <a href="https://wa.me/8801700000000?text=I%20want%20to%20order%20Hoco%20TWS%20Earbuds" target="_blank" class="btn">WhatsApp-এ অর্ডার করুন</a>
+        <!-- Header & Animated Virus Logo -->
+        <div class="header">
+            <img src="1790500817674.jpg" alt="Gadget Box Logo" class="logo-img">
+            <h1>Gadget Box</h1>
+            <p>Your Premium Gadget Partner</p>
         </div>
 
-        <!-- Product 2 -->
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Smartwatch">
-            <h3>Smartwatch Series</h3>
-            <p>HD ডিসপ্লে, ফিটনেস ট্র্যাকিং ও দীর্ঘ ব্যাটারি ব্যাকআপ।</p>
-            <div class="price">৳ ১,৬৫০</div>
-            <a href="https://wa.me/8801700000000?text=I%20want%20to%20order%20Smartwatch" target="_blank" class="btn">WhatsApp-এ অর্ডার করুন</a>
+        <!-- Action Buttons -->
+        <div class="btn-container">
+            <a href="https://www.facebook.com/profile.php?id=61595117870237" target="_blank" class="btn btn-facebook">
+                Visit Facebook Page
+            </a>
+            <a href="#" class="btn btn-whatsapp">
+                Order via WhatsApp
+            </a>
         </div>
 
-        <!-- Product 3 -->
-        <div class="card">
-            <img src="https://images.unsplash.com/photo-1609592424109-dd9892f1b177" alt="Power Bank">
-            <h3>Fast Charging Power Bank</h3>
-            <p>১০,০০০ mAh ধারণক্ষমতা ও ফার্স্ট চার্জিং সাপোর্ট।</p>
-            <div class="price">৳ ১,২০০</div>
-            <a href="https://wa.me/8801700000000?text=I%20want%20to%20order%20Power%20Bank" target="_blank" class="btn">WhatsApp-এ অর্ডার করুন</a>
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2026 Gadget Box. All rights reserved.</p>
         </div>
-    </div>
-
-    <div class="footer">
-        <p>&copy; 2026 Gadget Box. All Rights Reserved.</p>
     </div>
 
 </body>
 </html>
+
