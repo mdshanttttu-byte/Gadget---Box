@@ -36,7 +36,7 @@
             pointer-events: none;
         }
 
-        /* Jhaya888 Premium Form Container */
+        /* Form Container */
         .auth-container {
             position: relative;
             z-index: 10;
@@ -201,4 +201,318 @@
 
         .timer-unit {
             background: rgba(15, 23, 42, 0.9);
-            padding: 10px 5px
+            padding: 10px 5px;
+            border-radius: 8px;
+            flex: 1;
+            border: 1px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .timer-num {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ff88;
+            display: block;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Magic Background -->
+    <canvas id="magic-canvas"></canvas>
+
+    <!-- AUTHENTICATION CARD -->
+    <div class="auth-container" id="auth-box">
+        <img src="1790500817674.jpg" alt="Gadget Box Logo" class="logo-img">
+        <h1 class="brand-title">Gadget Box</h1>
+        <p class="brand-sub">Your Premium Gadget Partner</p>
+
+        <!-- Tabs -->
+        <div class="tab-box">
+            <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">LOGIN</button>
+            <button class="tab-btn" id="tab-signup" onclick="switchTab('signup')">SIGN UP</button>
+        </div>
+
+        <!-- Form -->
+        <form id="auth-form" onsubmit="handleAuth(event)">
+            <div class="input-group">
+                <label>Email Address / Username</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="submit-btn" id="submit-btn">Login Access</button>
+        </form>
+
+        <!-- Notification Box -->
+        <div id="alert-msg"></div>
+    </div>
+
+    <!-- DASHBOARD PANEL -->
+    <div class="auth-container" id="dashboard">
+        <img src="1790500817674.jpg" alt="Gadget Box Logo" class="logo-img">
+        <h1 class="brand-title">Gadget Box</h1>
+        <p class="brand-sub" id="user-welcome">System Upgrade in Progress</p>
+        
+        <div class="dash-card">
+            <h2 style="color: #ffd700; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">COMING SOON</h2>
+            <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">We are upgrading our portal for a better experience!</p>
+            
+            <!-- Fixed Real Countdown Timer -->
+            <div class="timer-box" id="countdown-box">
+                <div class="timer-unit">
+                    <span class="timer-num" id="days">00</span>
+                    <span class="timer-label">Days</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-num" id="hours">00</span>
+                    <span class="timer-label">Hours</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-num" id="minutes">00</span>
+                    <span class="timer-label">Mins</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-num" id="seconds" style="color: #ff0055;">00</span>
+                    <span class="timer-label">Secs</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="submit-btn" style="background: linear-gradient(135deg, #ff4d4d, #dc2626); color: #fff;" onclick="handleLogout()">Logout</button>
+    </div>
+
+    <script>
+        let currentMode = 'login';
+        
+        function getUsersDB() {
+            return JSON.parse(localStorage.getItem('gadgetBoxUsers')) || {};
+        }
+
+        function switchTab(mode) {
+            currentMode = mode;
+            const loginBtn = document.getElementById('tab-login');
+            const signupBtn = document.getElementById('tab-signup');
+            const submitBtn = document.getElementById('submit-btn');
+            hideAlert();
+
+            if(mode === 'login') {
+                loginBtn.classList.add('active');
+                signupBtn.classList.remove('active');
+                submitBtn.innerText = 'Login Access';
+            } else {
+                signupBtn.classList.add('active');
+                loginBtn.classList.remove('active');
+                submitBtn.innerText = 'Register Account';
+            }
+        }
+
+        function handleAuth(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            let usersDB = getUsersDB();
+
+            if (password.length < 6) {
+                showAlert("পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে!", "#ff4d4d");
+                return;
+            }
+
+            if (currentMode === 'signup') {
+                if (usersDB[email]) {
+                    showAlert("এই ইমেইল দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে! লগইন করুন।", "#ff4d4d");
+                } else {
+                    usersDB[email] = password;
+                    localStorage.setItem('gadgetBoxUsers', JSON.stringify(usersDB));
+                    showAlert("রেজিস্ট্রেশন সফল হয়েছে! এখন লগইন করুন...", "#00ff88");
+                    setTimeout(() => {
+                        switchTab('login');
+                        document.getElementById('auth-form').reset();
+                    }, 1500);
+                }
+            } else {
+                if (!usersDB[email]) {
+                    showAlert("অ্যাকাউন্ট পাওয়া যায়নি! আগে সাইন-আপ করুন।", "#ff4d4d");
+                } else if (usersDB[email] !== password) {
+                    showAlert("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।", "#ff4d4d");
+                } else {
+                    showAlert("লগইন সফল হয়েছে! ড্যাশবোর্ডে প্রবেশ করছেন...", "#00ff88");
+                    setTimeout(() => {
+                        showDashboard(email);
+                    }, 800);
+                }
+            }
+        }
+
+        function showAlert(message, color) {
+            const alertMsg = document.getElementById('alert-msg');
+            alertMsg.innerText = message;
+            alertMsg.style.borderColor = color;
+            alertMsg.style.color = color;
+            alertMsg.style.display = 'block';
+        }
+
+        function hideAlert() {
+            document.getElementById('alert-msg').style.display = 'none';
+        }
+
+        function showDashboard(user) {
+            document.getElementById('auth-box').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('user-welcome').innerText = `Welcome, ${user}!`;
+            
+            playBabyWelcomeSound();
+            startCountdown();
+        }
+
+        function playBabyWelcomeSound() {
+            try {
+                const babyAudio = new Audio('https://www.soundjay.com/human/baby-laugh-1.mp3');
+                babyAudio.play().catch(error => {
+                    console.log("Audio autoplay restricted:", error);
+                });
+            } catch (e) {
+                console.log("Audio error");
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('auth-box').style.display = 'block';
+            document.getElementById('auth-form').reset();
+            hideAlert();
+        }
+
+        // Fixed Countdown Timer (November 22, 2026)
+        const targetDate = new Date("November 22, 2026 00:00:00").getTime();
+
+        function startCountdown() {
+            function updateTimer() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById("countdown-box").innerHTML = "<h3 style='color:#00ff88; font-size:18px;'>SYSTEM IS NOW LIVE!</h3>";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+            }
+
+            setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        // Magic Canvas Animation
+        const canvas = document.getElementById('magic-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let stars = [];
+        let particles = [];
+
+        for (let i = 0; i < 70; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                alpha: Math.random(),
+                speed: Math.random() * 0.02 + 0.005
+            });
+        }
+
+        function createMagicBurst(x, y) {
+            for (let i = 0; i < 20; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    size: Math.random() * 4 + 2,
+                    color: `hsl(${Math.random() * 50 + 40}, 100%, 60%)`,
+                    life: 1
+                });
+            }
+        }
+
+        window.addEventListener('pointerdown', (e) => {
+            createMagicBurst(e.clientX, e.clientY);
+        });
+
+        function drawMoon() {
+            ctx.save();
+            ctx.fillStyle = "#fff8d6";
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = "#ffd700";
+            ctx.beginPath();
+            ctx.arc(canvas.width - 80, 80, 30, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#060913";
+            ctx.shadowBlur = 0;
+            ctx.beginPath();
+            ctx.arc(canvas.width - 68, 70, 26, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            stars.forEach(star => {
+                star.alpha += star.speed;
+                if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
+                ctx.fillStyle = `rgba(255, 215, 0, ${Math.abs(star.alpha)})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            drawMoon();
+
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life -= 0.03;
+                if (p.life <= 0) {
+                    particles.splice(index, 1);
+                } else {
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.life;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.globalAlpha = 1;
+                }
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
