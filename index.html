@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gadget Box - Your Premium Gadget Partner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            background-color: #0b0f17;
+            color: #e6edf3;
+            padding: 20px 10px;
+        }
+        .header {
+            text-align: center;
+            padding: 35px 15px;
+            background: linear-gradient(135deg, #161e2e, #0b0f17);
+            border-radius: 16px;
+            margin-bottom: 30px;
+            border: 1px solid #1f293d;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+        }
+        .header h1 {
+            color: #f59e0b;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .header p {
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: #111827;
+            border: 1px solid #1f293d;
+            border-radius: 14px;
+            width: 100%;
+            max-width: 320px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #f59e0b;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15);
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+        .card p {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .price {
+            color: #10b981;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 10px 0 15px 0;
+        }
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background-color: #1eb857;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Gadget Box</h1>
+        <p>Your Premium Gadget Partner</p>
+    </div>
+
+    <div class="container">
+        <!-- Product 1 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df" alt="TWS Earbuds">
+            <h3>Hoco TWS Earbuds</h3>
+            <p>ANC + ENC নয়েজ ক্যানসেলেশন ও ক্রিস্টাল ক্লিয়ার সাউন্ড।</p>
+            <div class="price">৳ ১,৪৫০</div>
+            <a href="https://wa.me/8801700000000?text=I%20want%20to%20order%20Hoco%20TWS%20Earbuds" target="_blank" class="btn">WhatsApp-এ অর্ডার করুন</a>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30" alt="Smartwatch">
+            <h3>Smartwatch Series</h3>
+            <p>HD ডিসপ্লে, ফিটনেস ট্র্যাকিং ও দীর্ঘ ব্যাটারি ব্যাকআপ।</p>
+            <div class="price">৳ ১,৬৫০</div>
+            <a href="https://wa.me/8801700000000?text=I%20want%20to%20order%20Smartwatch" target="_blank" class="btn">WhatsApp-এ অর্ডার করুন</a>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1609592424109-dd9892f1b177" alt="Power Bank">
+            <h3>Fast Charging Power Bank</h3>
+            <p>১০,০০০ mAh ধারণক্ষমতা ও ফার্স্ট চার্জিং সাপোর্ট।</p>
+            <div class="price">৳ ১,২০০</div>
+            <a href="https://wa.me/8801700000000?text=I%20want%20to%20order%20Power%20Bank" target="_blank" class="btn">WhatsApp-এ অর্ডার করুন</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Gadget Box. All Rights Reserved.</p>
+    </div>
+
+</body>
+</html>
