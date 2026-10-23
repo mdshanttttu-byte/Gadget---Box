@@ -36,7 +36,7 @@
             pointer-events: none;
         }
 
-        /* Jhaya888 Premium Form Container (No Red Border) */
+        /* Jhaya888 Premium Form Container */
         .auth-container {
             position: relative;
             z-index: 10;
@@ -82,7 +82,7 @@
             margin-bottom: 22px;
         }
 
-        /* Betting Site Style Tab Switcher */
+        /* Tab Switcher */
         .tab-box {
             display: flex;
             background: rgba(30, 41, 59, 0.8);
@@ -185,11 +185,41 @@
 
         .dash-card {
             background: rgba(30, 41, 59, 0.8);
-            padding: 18px;
-            border-radius: 12px;
-            margin: 18px 0;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            text-align: left;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            text-align: center;
+        }
+
+        .timer-box {
+            display: flex;
+            justify-content: space-around;
+            gap: 6px;
+            margin-top: 15px;
+        }
+
+        .timer-unit {
+            background: rgba(15, 23, 42, 0.9);
+            padding: 10px 5px;
+            border-radius: 8px;
+            flex: 1;
+            border: 1px solid #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .timer-num {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ff88;
+            display: block;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            margin-top: 2px;
         }
     </style>
 </head>
@@ -227,20 +257,35 @@
         <div id="alert-msg"></div>
     </div>
 
-    <!-- DASHBOARD PANEL -->
+    <!-- DASHBOARD PANEL (COMING SOON) -->
     <div class="auth-container" id="dashboard">
         <img src="1790500817674.jpg" alt="Gadget Box Logo" class="logo-img">
-        <h1 class="brand-title">Dashboard</h1>
-        <p class="brand-sub" id="user-welcome">Welcome Back!</p>
+        <h1 class="brand-title">Gadget Box</h1>
+        <p class="brand-sub" id="user-welcome">System Upgrade in Progress</p>
         
         <div class="dash-card">
-            <p style="color: #ffd700; font-weight: bold; margin-bottom: 8px;">⚡ Quick Options:</p>
-            <ul style="color: #cbd5e1; margin-left: 20px; font-size: 13px; line-height: 1.8;">
-                <li>👤 My Profile</li>
-                <li>🎧 Gadget Catalog</li>
-                <li>📦 Order History</li>
-                <li>💬 WhatsApp Support</li>
-            </ul>
+            <h2 style="color: #ffd700; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px;">COMING SOON</h2>
+            <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;">We are upgrading our portal for a better experience!</p>
+            
+            <!-- Fixed Real Countdown Timer -->
+            <div class="timer-box" id="countdown-box">
+                <div class="timer-unit">
+                    <span class="timer-num" id="days">00</span>
+                    <span class="timer-label">Days</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-num" id="hours">00</span>
+                    <span class="timer-label">Hours</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-num" id="minutes">00</span>
+                    <span class="timer-label">Mins</span>
+                </div>
+                <div class="timer-unit">
+                    <span class="timer-num" id="seconds" style="color: #ff0055;">00</span>
+                    <span class="timer-label">Secs</span>
+                </div>
+            </div>
         </div>
 
         <button class="submit-btn" style="background: linear-gradient(135deg, #ff4d4d, #dc2626); color: #fff;" onclick="handleLogout()">Logout</button>
@@ -325,6 +370,22 @@
             document.getElementById('auth-box').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
             document.getElementById('user-welcome').innerText = `Welcome, ${user}!`;
+            
+            // ড্যাশবোর্ডে প্রবেশের সময় কিউট হাসির সাউন্ড বা ওয়েলকাম এফেক্ট
+            playBabyWelcomeSound();
+            
+            startCountdown();
+        }
+
+        function playBabyWelcomeSound() {
+            try {
+                const babyAudio = new Audio('https://www.soundjay.com/human/baby-laugh-1.mp3');
+                babyAudio.play().catch(error => {
+                    console.log("Audio autoplay restricted:", error);
+                });
+            } catch (e) {
+                console.log("Audio error");
+            }
         }
 
         function handleLogout() {
@@ -334,7 +395,35 @@
             hideAlert();
         }
 
-        // --- 2. MAGIC CANVAS ANIMATION (STARS, MOON & TOUCH SPARKLES) ---
+        // --- 2. FIXED REAL COUNTDOWN TIMER SCRIPT (২২ নভেম্বর, ২০২৬) ---
+        const targetDate = new Date("November 22, 2026 00:00:00").getTime();
+
+        function startCountdown() {
+            function updateTimer() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById("countdown-box").innerHTML = "<h3 style='color:#00ff88; font-size:18px;'>SYSTEM IS NOW LIVE!</h3>";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? '0' + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? '0' + seconds : seconds;
+            }
+
+            setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        // --- 3. MAGIC CANVAS ANIMATION (STARS, MOON & TOUCH SPARKLES) ---
         const canvas = document.getElementById('magic-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -348,7 +437,6 @@
         let stars = [];
         let particles = [];
 
-        // Generate Background Floating Stars & Moon
         for (let i = 0; i < 70; i++) {
             stars.push({
                 x: Math.random() * canvas.width,
@@ -373,12 +461,10 @@
             }
         }
 
-        // Touch & Click Event Listener for Magic Balls
         window.addEventListener('pointerdown', (e) => {
             createMagicBurst(e.clientX, e.clientY);
         });
 
-        // Draw Crescent Moon
         function drawMoon() {
             ctx.save();
             ctx.fillStyle = "#fff8d6";
@@ -388,7 +474,6 @@
             ctx.arc(canvas.width - 80, 80, 30, 0, Math.PI * 2);
             ctx.fill();
 
-            // Cutout for crescent shape
             ctx.fillStyle = "#060913";
             ctx.shadowBlur = 0;
             ctx.beginPath();
@@ -400,7 +485,6 @@
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw Stars
             stars.forEach(star => {
                 star.alpha += star.speed;
                 if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
@@ -410,10 +494,8 @@
                 ctx.fill();
             });
 
-            // Draw Moon
             drawMoon();
 
-            // Draw Touch Sparkle Particles
             particles.forEach((p, index) => {
                 p.x += p.vx;
                 p.y += p.vy;
@@ -436,4 +518,4 @@
         animate();
     </script>
 </body>
-                </html>
+</html>
